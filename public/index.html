@@ -1,0 +1,135 @@
+<!doctype html>  
+<html lang="en">  
+    <head>
+        <meta charset="UTF8">
+        <title>learnflow client</title>
+        <link rel="stylesheet" type="text/css" href="http://yegor256.github.io/tacit/tacit.min.css"/>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+        <style type="text/css">
+            .items {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .items .item {
+                flex: 0 0 33%;
+                box-sizing: border-box;
+                background: #ffffff;
+                padding: 5px;
+                margin-top: 10px;
+            }
+
+            #cy {
+                width: 400px;
+                height: 400px;
+                border-style: solid;
+                border-width: 1px;
+
+                display: block;
+            }
+
+            #form-holder{
+                margin: auto;
+            }
+
+        </style>
+    </head>
+    <body>
+        <section>
+        <header>
+        <nav>
+        <ul>  
+            <li><a href="#home">Home</a></li>
+            <li><a href="#trees/all">Trees</a></li>
+            <li><a href="#nodes/all">Node List</a></li>
+            <li><a href="#votes/all">Vote List</a></li>
+            <li><a href="#voting">Voting</a></li>
+        </ul>
+        </nav>
+        </header>
+
+        <article>
+
+        <h1>LearnFlow</h1>
+
+        <div id="main">
+            <!-- Rendered views go here -->
+        </div>
+
+        </article>
+
+        <footer>
+        <nav>
+        LearnFlow - made by <a href="//twitter.com/@_eamonnbell">@_eamonnbell</a> - Powered by hapi, Backbone.js, and friends 
+        </nav>
+        </footer>
+
+        </section>
+
+        <script type="text/template" id="home-template">
+        <h2>Home</h2>
+        <p>What is LearnFlow? And why should I care?</p>
+        </script>
+
+        <script type="text/template" id="voting-template">
+            <h2>Feedback</h2>
+            <p>Based on your opinion of these two resources, what order you do you recommend they be used in?</p>
+            
+            <div id="node-deck" class="items">
+
+            <div id="form-holder" class="item">
+            <form>
+                <fieldset>
+                <input name="first" id="first" type="hidden"/>
+                <input name="second" id="second" type="hidden"/>
+
+                <label for="type">Relationship: </label>
+                <select name="type" id="type">
+                    <option value="before">before</option>
+                    <option value="after">after</option>
+                </select>
+
+                <button type="submit">Vote!</button>
+                </fieldset>
+            </form>
+            </div>
+
+            </div>
+            
+
+        </script>
+
+        <script type="text/template" id="vote-list-template">
+            <div id="vote-list-container">
+            <h2>Vote List</h2>
+            <h3>List view</h3>
+            <ul id="vote-list">
+            </ul>
+            </div>
+        </script>
+
+        <script type="text/template" id="vote-template">
+        <%= first %> - <%= type %> - <%= second %> (<%= moment(Number(datetime)).fromNow() %>)
+        </script>
+
+        <script type="text/template" id="tree-template">
+        <div id="tree-container">
+        <h2>Trees</h3>
+        <div id="cy"></div>
+        </div>
+        </script>
+
+        <script type="text/template" id="node-list-template">
+            <h2>Node List</h2>
+            <div id="node-deck" class="items">
+            </div>           
+        </script>
+
+        <script type="text/template" id="node-template">
+            <p><strong><%= title %></strong></p>
+            <p><img src="img/<%= imgsrc %>"></p>
+            <p>by <%= author %><p>
+        </script>
+    </body>
+    <script type="text/javascript" src="js/bundle.js"></script>
+</html>  
