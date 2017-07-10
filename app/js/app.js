@@ -102,7 +102,12 @@ LearnflowApp.Views.VoteView = Backbone.View.extend({
     },
     
     render: function(){
-        this.$el.html(this.template(this.model.attributes));
+        var vote = {};
+        // mix moment into the model object so that it's available
+        // in the template scope
+        Object.assign(vote, this.model.attributes, {moment: moment});
+
+        this.$el.html(this.template(vote));
         return this;
     }
 });
@@ -168,8 +173,6 @@ LearnflowApp.Views.Tree = Backbone.View.extend({
     },
 
     renderTree: function(tree){
-        console.log(tree.attributes.elements);
-
         var cy = cytoscape({
           container: this.$el.find('div#cy'), // container to render in
 
@@ -232,9 +235,6 @@ LearnflowApp.Views.VoteList = Backbone.View.extend({
 
             this.$el.find('#vote-list').append(voteview.render().el);
         }
-
-        // todo: promises
-        this.renderTree(votes);
     },
 
     getVotes: function(){
