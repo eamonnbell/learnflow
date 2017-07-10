@@ -1,5 +1,8 @@
 'use strict';
 
+require("css-loader!../css/tacit.min.css");
+require("css-loader!../css/learnflow.css");
+
 const $ = require('jquery');
 const _ = require('underscore');
 
