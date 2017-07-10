@@ -8,26 +8,26 @@ const Path = require('path');
 const server = new Hapi.Server();
 
 server.connection({
-	host: 'localhost',
-	port: 3000,
-	routes: {
+  host: 'localhost',
+  port: 3000,
+  routes: {
         files: {
             relativeTo: Path.join(__dirname, 'app')
         },
-	}
+  }
 });
 
 server.app.db = mongojs('learnflow-test', ['nodes', 'trees', 'votes']);
 
 server.register([
     Inert,
-	require('./api/routes/nodes'),
-	require('./api/routes/votes'),
-	require('./api/routes/trees')
+  require('./api/routes/nodes'),
+  require('./api/routes/votes'),
+  require('./api/routes/trees')
 ], (err) => {
-	if (err) {
-		throw err;
-	}
+  if (err) {
+    throw err;
+  }
 })
 
 server.route({
@@ -35,17 +35,17 @@ server.route({
     path: '/{param*}',
     handler: {
         directory: {
-        	// relative to app/
-        	path: '.',
-        	index: true
+          // relative to app/
+          path: '.',
+          index: true
         },
     },
 });
 
 server.start((err) => {
-	if(err) {
-		throw err;
-	}
-	
-	console.log("it's alive at", server.info.uri);
+  if(err) {
+    throw err;
+  }
+  
+  console.log("it's alive at", server.info.uri);
 })
