@@ -35,12 +35,11 @@ exports.register = function(server, options, next) {
 		handler: function(request, reply) {
 
 			// votes on ids get handled here
-			// three types:
-			// 1. a -> b
-			// 2. a <- a
-			// 3. a = b
+			// two types:
+			// 1. a -> b "a before b"
+			// 2. a <- b "a after b"
 			// first={:id}&second={:id}&type={before, after, same}
-			// TODO make sure only VALID ids are pushed on the
+			// TODO make sure only VAALID ids are pushed on the tree
 			var vote = {};
 
 			vote.first = request.payload.first;

@@ -12,7 +12,7 @@ server.connection({
 	port: 3000,
 	routes: {
         files: {
-            relativeTo: Path.join(__dirname, 'public')
+            relativeTo: Path.join(__dirname, 'app')
         },
 	}
 });
