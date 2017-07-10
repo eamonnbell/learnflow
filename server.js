@@ -21,9 +21,9 @@ server.app.db = mongojs('learnflow-test', ['nodes', 'trees', 'votes']);
 
 server.register([
     Inert,
-	require('./routes/nodes'),
-	require('./routes/votes'),
-	require('./routes/trees')
+	require('./api/routes/nodes'),
+	require('./api/routes/votes'),
+	require('./api/routes/trees')
 ], (err) => {
 	if (err) {
 		throw err;
@@ -35,7 +35,7 @@ server.route({
     path: '/{param*}',
     handler: {
         directory: {
-        	// relative to public/
+        	// relative to app/
         	path: '.',
         	index: true
         },
