@@ -35,6 +35,7 @@ server.route({
     path: '/{param*}',
     handler: {
         directory: {
+        	// relative to public/
         	path: '.',
         	index: true
         },

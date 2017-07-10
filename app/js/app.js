@@ -9,8 +9,8 @@ Backbone.$ = $;
 const Syphon = require('backbone.syphon');
 Backbone.Syphon = Syphon; 
 
-const moment = require('moment');
 const cytoscape = require('cytoscape');
+const moment = require('moment');
 
 var LearnflowApp = {
     Views: {},

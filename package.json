@@ -19,6 +19,7 @@
     "mongojs": "^2.4.0",
     "node-uuid": "^1.4.7",
     "shuffle-array": "^1.0.1",
+    "tacit": "^0.2.1",
     "underscore": "^1.8.3"
   }
 }
