@@ -2,15 +2,14 @@
 
 const Boom = require('boom');
 const Joi = require('joi');
+const Vote = require('../models/').Vote;
 
 exports.register = function(server, options, next) {
-  const db = server.app.db;
-
   server.route({
     method: 'GET',
     path: '/api/votes',
     handler: function(request, reply) {
-      db.votes.find((err, docs) => {
+      Vote.find((err, docs) => {
         if (err) {
           return reply(Boom.wrap(err, 'Internal MongoDB error'));
         }
@@ -40,23 +39,18 @@ exports.register = function(server, options, next) {
       // 2. a <- b "a after b"
       // first={:id}&second={:id}&type={before, after, same}
       // TODO make sure only VAALID ids are pushed on the tree
-      var vote = {};
-
-      vote.first = request.payload.first;
-      vote.second = request.payload.second;
-      vote.type = request.payload.type;
+      var vote = new Vote(request.payload);
       vote.datetime = Date.now();
 
-      db.votes.insert(
-        vote,
-        (err) => {
-          if (err) {
-            return reply(Boom.wrap(err, 'Internal MongoDB error'));
-          } else {
-            return reply();
-          }
+      vote.save((err, vote) => {
+        if(!err) {
+          reply(vote).created();
+        } else {
+          reply(Boom.forbidden("couldn't persist"));
         }
-      );
+      });
+
+      
     }
   });
 
