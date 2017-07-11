@@ -2,7 +2,7 @@
 
 const Boom = require('boom');
 const Joi = require('joi');
-const Vote = require('../models/').Vote;
+const Vote = require('../models/vote').Vote;
 
 exports.register = function(server, options, next) {
   server.route({

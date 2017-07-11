@@ -2,16 +2,17 @@
 
 const Boom = require('boom');
 const shuffle = require('shuffle-array');
+const Node = require('../models/node').Node;
+
 
 exports.register = function(server, options, next) {
-  const db = server.app.db;
 
   // get all nodes
   server.route({
     method: 'GET',
     path: '/api/nodes',
     handler: function (request, reply) {
-      db.nodes.find((err, docs) => {
+      Node.find((err, docs) => {
         if (err) {
           return reply(Boom.wrap(err, 'Internal MongoDB error'));
         }
@@ -27,7 +28,7 @@ exports.register = function(server, options, next) {
     method: 'GET',
     path: '/api/nodes/{id}',
     handler: function (request, reply) {
-      db.nodes.findOne({
+      Node.findOne({
         _id: Number(request.params.id)
       }, (err, doc) => {
         if (err) {
@@ -48,7 +49,7 @@ exports.register = function(server, options, next) {
     method: 'GET',
     path: '/api/nodes/{id_a}/{id_b}',
     handler: function (request, reply) {
-      db.nodes.find({
+      Node.find({
         _id: {
           $in: [Number(request.params.id_a),
               Number(request.params.id_b)]
@@ -75,7 +76,7 @@ exports.register = function(server, options, next) {
       var distinct_ids;
       var a, b, rest;
 
-      db.nodes.distinct('_id', {}, (err, list) => {
+      Node.distinct('_id', {}, (err, list) => {
         if (err) {
           return reply(Boom.wrap(err, 'Internal MongoDB error'));
         }

@@ -22,12 +22,13 @@ server.connection({
 
 // server.app.db = mongojs('learnflow-test', ['nodes', 'trees', 'votes']);
 
-Mongoose.connect('mongodb://' + config.database.host + '/' + config.database.db);
+let db_uri = 'mongodb://' + config.database.host + '/' + config.database.db;
 
-server.app.db = Mongoose.connecton;
+Mongoose.connect(db_uri, (err) => {
+  console.log('db connection error')
+});
 
-server.app.db.on('error', () => { console.log('db connection error'); });
-server.app.db.once('open', () => { console.log('db connected'); });
+server.app.db = Mongoose.connection;
 
 server.register([
     Inert,

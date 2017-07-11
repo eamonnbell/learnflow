@@ -2,6 +2,7 @@
 
 const Boom = require('boom');
 const cytoscape = require('cytoscape');
+const Vote = require('../models/vote').Vote;
 
 exports.register = function(server, options, next) {
   
@@ -11,7 +12,7 @@ exports.register = function(server, options, next) {
     method: 'GET',
     path: '/api/trees',
     handler: function(request, reply) {
-      db.votes.find((err, docs) => {
+      Vote.find((err, docs) => {
         if (err) {
           return reply(Boom.wrap(err, 'Internal MongoDB error'));
         }
