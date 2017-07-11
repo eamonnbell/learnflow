@@ -2,7 +2,7 @@ const Backbone = require('backbone');
 
 const Vote = require('../models/Vote');
 
-LearnflowApp.Collections.Votes = Backbone.Collection.extend({
+module.exports = Backbone.Collection.extend({
     initialize: function(options) {},
     
     model: Vote,

@@ -35,7 +35,7 @@ module.exports = Backbone.Router.extend({
     },
 
     tree: function(){
-        var view = new views.Tree();
+        var view = new views.TreeView();
         $('#main').html(view.render().el);
     }
 });

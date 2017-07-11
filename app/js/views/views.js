@@ -7,6 +7,9 @@ const _ = require('underscore');
 const Syphon = require('backbone.syphon');
 Backbone.Syphon = Syphon;
 
+const cytoscape = require('cytoscape');
+const moment = require('moment');
+
 const Tree = require('../models/Tree');
 const Vote = require('../models/Vote');
 
@@ -64,7 +67,7 @@ var Home = Backbone.View.extend({
     }
 });
 
-var Tree = Backbone.View.extend({
+var TreeView = Backbone.View.extend({
     initialize: function(options) {
         this.getTree();
     },
@@ -243,7 +246,7 @@ module.exports = {
     NodeView: NodeView,
     VoteView: VoteView,
     Home: Home,
-    Tree: Tree,
+    TreeView: TreeView,
     NodeList: NodeList,
     VoteList: VoteList,
     Voting: Voting
