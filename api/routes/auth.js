@@ -12,6 +12,11 @@ const createUserSchema = Joi.object({
   slogan: Joi.string().max(128)
 });
 
+const authenticateUserSchema = Joi.object({
+  username: Joi.string().alphanum().min(2).max(30).required(),
+  password: Joi.string().min(8).required(),
+});
+
 exports.register = function(server, options, next) {
   server.route({
 
@@ -47,8 +52,22 @@ exports.register = function(server, options, next) {
         });
       }
     },
+  });
 
-    
+  server.route({
+    method: 'POST',
+    path: '/api/auth/authenticate',
+    config: {
+      pre: [
+        { method: utils.verifyCredentials, assign: 'user' }
+      ],
+      handler: (req, res) => {
+        res({ id_token: utils.createToken(req.pre.user) }).code(201);
+      },
+      validate: {
+        payload: authenticateUserSchema
+      }
+    }
   });
 
   return next();

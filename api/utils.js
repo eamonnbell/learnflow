@@ -28,6 +28,26 @@ function verifyUniqueUser(req, res) {
   });
 }
 
+function verifyCredentials(req, res){
+  const password = req.payload.password;
+
+  User.findOne({
+    username: req.payload.username
+  }, (err, user) => {
+    if(user) {
+      bcrypt.compare(password, user.password, (err, isValid) => {
+        if(isValid) {
+          res(user);
+        } else {
+          res(Boom.badRequest('Invalid credentials.'));
+        }
+      });
+    } else {
+      res(Boom.badRequest('Invalid credentials.'));
+    }
+  });
+}
+
 function createToken(user){
   let scopes;
   if (user.admin) {
@@ -47,5 +67,6 @@ function createToken(user){
 module.exports = {
   hashPassword: hashPassword,
   verifyUniqueUser: verifyUniqueUser,
+  verifyCredentials: verifyCredentials,
   createToken: createToken
 };
