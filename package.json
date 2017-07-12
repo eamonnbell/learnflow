@@ -9,6 +9,7 @@
   "dependencies": {
     "backbone": "^1.3.3",
     "backbone.syphon": "^0.7.0",
+    "bcrypt": "^1.0.2",
     "boom": "^4.2.0",
     "css-loader": "^0.28.4",
     "cytoscape": "^3.1.1",
