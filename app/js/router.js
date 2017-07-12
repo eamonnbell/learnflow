@@ -7,6 +7,8 @@ const views = require('./views/views');
 module.exports = Backbone.Router.extend({
     routes: {
         'home': 'home',
+        'signup': 'signup',
+        'login': 'login',
         'trees/all': 'tree',
         'nodes/all': 'nodelist',
         'votes/all': 'votelist',
@@ -16,6 +18,16 @@ module.exports = Backbone.Router.extend({
 
     home: function(){
         var view = new views.Home();
+        $('#main').html(view.render().el);
+    },
+
+    signup: function(){
+        var view = new views.Signup();
+        $('#main').html(view.render().el);
+    },
+
+    login: function(){
+        var view = new views.Login();
         $('#main').html(view.render().el);
     },
 

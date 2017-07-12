@@ -67,6 +67,28 @@ var Home = Backbone.View.extend({
     }
 });
 
+var Signup = Backbone.View.extend({
+    initialize: function(options) {},
+
+    template: _.template($('#signup-template').html()),
+    
+    render: function() {
+        this.$el.html(this.template({}));
+        return this;
+    }
+});
+
+var Login = Backbone.View.extend({
+    initialize: function(options) {},
+
+    template: _.template($('#login-template').html()),
+    
+    render: function() {
+        this.$el.html(this.template({}));
+        return this;
+    }
+});
+
 var TreeView = Backbone.View.extend({
     initialize: function(options) {
         this.getTree();
@@ -246,6 +268,8 @@ module.exports = {
     NodeView: NodeView,
     VoteView: VoteView,
     Home: Home,
+    Signup: Signup,
+    Login: Login,
     TreeView: TreeView,
     NodeList: NodeList,
     VoteList: VoteList,
