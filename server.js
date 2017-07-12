@@ -14,9 +14,9 @@ server.connection({
   host: config.server.host,
   port: config.server.port,
   routes: {
-        files: {
-            relativeTo: Path.join(__dirname, 'app')
-        },
+    files: {
+      relativeTo: Path.join(__dirname, 'app')
+    },
   }
 });
 
@@ -25,7 +25,7 @@ server.connection({
 let db_uri = 'mongodb://' + config.database.host + '/' + config.database.db;
 
 Mongoose.connect(db_uri, (err) => {
-  console.log('db connection error')
+  console.log('db connection error');
 });
 
 server.app.db = Mongoose.connection;
@@ -42,10 +42,11 @@ server.register(require('hapi-auth-jwt'), (err) => {
 });
 
 server.register([
-    Inert,
+  Inert,
   require('./api/routes/nodes'),
   require('./api/routes/votes'),
-  require('./api/routes/trees')
+  require('./api/routes/trees'),
+  require('./api/routes/auth')
 ], (err) => {
   if (err) {
     throw err;
@@ -53,15 +54,15 @@ server.register([
 })
 
 server.route({
-    method: 'GET', 
-    path: '/{param*}',
-    handler: {
-        directory: {
-          // relative to app/
-          path: '.',
-          index: true
-        },
+  method: 'GET', 
+  path: '/{param*}',
+  handler: {
+    directory: {
+      // relative to app/
+      path: '.',
+      index: true
     },
+  },
 });
 
 server.start((err) => {

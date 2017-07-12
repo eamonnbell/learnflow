@@ -1,10 +1,9 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
 const Boom = require('boom');
 const Joi = require('joi');
 
-const User = require('../models/user');
+const User = require('../models/user').User;
 const utils = require('../utils');
 
 const createUserSchema = Joi.object({
@@ -13,41 +12,49 @@ const createUserSchema = Joi.object({
   slogan: Joi.string().max(128)
 });
 
-module.exports = {
-  method: 'POST',
-  path: '/api/auth/users',
-  
-  config: {
+exports.register = function(server, options, next) {
+  server.route({
 
-    pre: [
-      { method: verifyUniqueUser }
-    ],
+    method: 'POST',
+    path: '/api/auth/users',
+    
+    config: {
+      pre: [
+        { method: utils.verifyUniqueUser }
+      ],
+      validate: {
+        payload: createUserSchema
+      },
+      handler: (req, res) => {
+        let user = new User();
+        user.username = req.payload.username;
+        user.slogan = req.payload.slogan;
+        user.admin = false;
 
-    validate: {
-      payload: createUserSchema
-    },
-
-    handler: (req, res) => {
-      let user = new User();
-      user.username = req.payload.email;
-      user.slogan = req.payload.slogan;
-      user.admin = false;
-
-      utils.hashPassword(req.payload.password, (err, hash) => {
-        if (err) {
-          throw Boom.badRequest(err);
-        }
-
-        user.password = hash;
-        user.save((err, user) => {
+        utils.hashPassword(req.payload.password, (err, hash) => {
           if (err) {
             throw Boom.badRequest(err);
           }
 
-          res({ id_token: createToken(user)}).code(201);
-        });
-      });
-    }
-  }
+          user.password = hash;
+          user.save((err, user) => {
+            if (err) {
+              throw Boom.badRequest(err);
+            }
 
-}
+            res({ id_token: utils.createToken(user)}).code(201);
+          });
+        });
+      }
+    },
+
+    
+  });
+
+  return next();
+};
+
+
+exports.register.attributes = {
+  name: 'routes-auth'
+};
