@@ -20,7 +20,7 @@ function verifyUniqueUser(req, res) {
     username: req.payload.username
   }, (err, user) => {
     if (user) {
-      if (user.usename === req.payload.username) {
+      if (user.username === req.payload.username) {
         res(Boom.badRequest('Username taken'));
       }
     }
