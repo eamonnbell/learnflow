@@ -4,7 +4,6 @@ const Boom = require('boom');
 const shuffle = require('shuffle-array');
 const Node = require('../models/node').Node;
 
-
 exports.register = function(server, options, next) {
 
   // get all nodes
