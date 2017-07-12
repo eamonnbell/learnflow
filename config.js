@@ -9,5 +9,6 @@ module.exports = {
     db: 'learnflow-test',
     username: '',
     password: ''
-  }
+  },
+  secret: 'sa12380f4qnvrq331-8nvcxs'
 };

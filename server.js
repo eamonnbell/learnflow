@@ -30,6 +30,17 @@ Mongoose.connect(db_uri, (err) => {
 
 server.app.db = Mongoose.connection;
 
+server.register(require('hapi-auth-jwt'), (err) => {
+  if (err) {
+    throw err;
+  }
+
+  server.auth.strategy('jwt', 'jwt', {
+    key: config.secret,
+    verifyOptions: { algorithms: ['HS256'] }
+  });
+});
+
 server.register([
     Inert,
   require('./api/routes/nodes'),
