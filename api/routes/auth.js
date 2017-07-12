@@ -5,20 +5,13 @@ const Boom = require('boom');
 const Joi = require('joi');
 
 const User = require('../models/user');
+const utils = require('../utils');
 
 const createUserSchema = Joi.object({
   username: Joi.string().alphanum().min(2).max(30).required(),
   password: Joi.string().min(8).required(),
   slogan: Joi.string().max(128)
 });
-
-function hashPassword(password, callback) {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(password, salt, (err, hash) => {
-      return callback(err, hash);
-    });
-  });
-}
 
 module.exports = {
   method: 'POST',
@@ -40,7 +33,7 @@ module.exports = {
       user.slogan = req.payload.slogan;
       user.admin = false;
 
-      hashPassword(req.payload.password, (err, hash) => {
+      utils.hashPassword(req.payload.password, (err, hash) => {
         if (err) {
           throw Boom.badRequest(err);
         }
