@@ -1,14 +1,14 @@
 const Backbone = require('backbone');
 
 module.exports = Backbone.Collection.extend({
-    initialize: function(options) {},
+  initialize: function(options) {},
 
-    url: function() {
-        return "http://localhost:3000/api/nodes";
-    },
+  url: function() {
+    return "http://localhost:3000/api/nodes";
+  },
 
-    parse: function(response) {
-        return response;
-    }
+  parse: function(response) {
+    return response;
+  }
 });
 

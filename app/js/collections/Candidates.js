@@ -1,13 +1,13 @@
 const Backbone = require('backbone');
 
 module.exports = Backbone.Collection.extend({
-    initialize: function(options) {},
+  initialize: function(options) {},
 
-    url: function() {
-        return "http://localhost:3000/api/nodes/randomPair";
-    },
+  url: function() {
+    return "http://localhost:3000/api/nodes/randomPair";
+  },
 
-    parse: function(response) {
-        return response;
-    }
+  parse: function(response) {
+    return response;
+  }
 });
