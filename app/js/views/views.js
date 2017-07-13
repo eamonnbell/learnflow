@@ -244,7 +244,7 @@ var Voting = Backbone.View.extend({
 
   getCandidates: function(){
     var candidates = new Candidates();
-    // readup on this API
+    // TODO understand Fetch API
     candidates.fetch({success: this.renderCandidates.bind(this)});
   },
 
@@ -259,6 +259,7 @@ var Voting = Backbone.View.extend({
     new_vote.save();
 
     this.$el.find('form').hide();
+    // TODO rewrite as component
     this.$el.find('form').after("<h3>Submitted!</h3><p><a href='javascript:window.location.reload(true)'>Vote again</a></p>");
 
   },
