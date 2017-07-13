@@ -60,9 +60,18 @@ var Home = Backbone.View.extend({
   initialize: function(options) {},
 
   template: _.template($('#home-template').html()),
+
+  getSignedInMessage: function(){
+    var authToken = window.sessionStorage.getItem('authToken');
+    if (authToken) {
+      return authToken + ' is home';
+    } else {
+      return 'no authToken set';
+    }
+  },
   
   render: function() {
-    this.$el.html(this.template({}));
+    this.$el.html(this.template({message: this.getSignedInMessage()}));
     return this;
   }
 });
