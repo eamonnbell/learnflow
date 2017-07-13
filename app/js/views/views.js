@@ -12,6 +12,8 @@ const moment = require('moment');
 
 const Tree = require('../models/Tree');
 const Vote = require('../models/Vote');
+const User = require('../models/User');
+const Credentials = require('../models/Credentials');
 
 const Votes = require('../collections/Votes');
 const Nodes = require('../collections/Nodes');
@@ -71,22 +73,62 @@ var Signup = Backbone.View.extend({
   initialize: function(options) {},
 
   template: _.template($('#signup-template').html()),
+
+  events: {
+    "submit": "formSubmitted",
+  },
   
   render: function() {
     this.$el.html(this.template({}));
     return this;
-  }
+  },
+
+  formSubmitted: function(event){
+    // catch submit event and prevent default behavior
+    event.preventDefault();
+
+    var data = Backbone.Syphon.serialize(this);
+
+    var user = new User();
+    user.set(data);
+    user.save();
+
+    this.$el.find('form').hide();
+    // TODO rewrite as component
+    this.$el.find('form').after("New user submitted.");
+
+  },
 });
 
 var Login = Backbone.View.extend({
   initialize: function(options) {},
 
   template: _.template($('#login-template').html()),
+
+  events: {
+    "submit": "formSubmitted",
+  },
   
   render: function() {
     this.$el.html(this.template({}));
     return this;
-  }
+  },
+
+  formSubmitted: function(event){
+    // catch submit event and prevent default behavior
+    event.preventDefault();
+
+    var data = Backbone.Syphon.serialize(this);
+
+    var credentials = new Credentials();
+    credentials.set(data);
+    credentials.save();
+
+    this.$el.find('form').hide();
+    // TODO rewrite as component
+    this.$el.find('form').after("Credentials submitted.");
+
+  },
 });
 
 var TreeView = Backbone.View.extend({
@@ -171,7 +213,6 @@ var VoteList = Backbone.View.extend({
     votes.fetch({success: this.renderVotes.bind(this)});
   }
 });
-
 
 var NodeList = Backbone.View.extend({
   template: $('#node-list-template').html(),
