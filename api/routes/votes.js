@@ -3,11 +3,25 @@
 const Boom = require('boom');
 const Joi = require('joi');
 const Vote = require('../models/vote').Vote;
+const config = require('../../config');
+
+var validate = function(decoded, request, callback) {
+  return callback(null, true);
+};
 
 exports.register = function(server, options, next) {
+  server.auth.strategy('jwt', 'jwt', {
+    key: config.secret,
+    validateFunc: validate,
+    verifyOptions: { algorithms: ['HS256'] }
+  });
+
   server.route({
     method: 'GET',
     path: '/api/votes',
+    config: {
+      auth: 'jwt'
+    },
     handler: function(request, reply) {
       Vote.find((err, docs) => {
         if (err) {

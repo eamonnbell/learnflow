@@ -15,4 +15,14 @@ Backbone.Syphon = Syphon;
 var Router = require('./router');
 var router = new Router();
 
+// patch bearer token into Backbone sync
+var _sync = Backbone.sync;
+Backbone.sync = function(method, model, options) {
+  options.headers =  {
+    'Authorization': 'Bearer ' + window.sessionStorage.getItem('authToken')
+  };
+
+  _sync(method, model, options);
+};
+
 Backbone.history.start();

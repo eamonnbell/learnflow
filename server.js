@@ -20,8 +20,6 @@ server.connection({
   }
 });
 
-// server.app.db = mongojs('learnflow-test', ['nodes', 'trees', 'votes']);
-
 let db_uri = 'mongodb://' + config.database.host + '/' + config.database.db;
 
 Mongoose.connect(db_uri, (err) => {
@@ -30,18 +28,8 @@ Mongoose.connect(db_uri, (err) => {
 
 server.app.db = Mongoose.connection;
 
-server.register(require('hapi-auth-jwt'), (err) => {
-  if (err) {
-    throw err;
-  }
-
-  server.auth.strategy('jwt', 'jwt', {
-    key: config.secret,
-    verifyOptions: { algorithms: ['HS256'] }
-  });
-});
-
 server.register([
+  require('hapi-auth-jwt2'),
   Inert,
   require('./api/routes/nodes'),
   require('./api/routes/votes'),
@@ -51,7 +39,7 @@ server.register([
   if (err) {
     throw err;
   }
-})
+});
 
 server.route({
   method: 'GET', 
