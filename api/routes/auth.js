@@ -13,8 +13,8 @@ const createUserSchema = Joi.object({
 });
 
 const authenticateUserSchema = Joi.object({
-  username: Joi.string().alphanum().min(2).max(30).required(),
-  password: Joi.string().min(8).required(),
+  username: Joi.string().required(),
+  password: Joi.string().required(),
 });
 
 exports.register = function(server, options, next) {
