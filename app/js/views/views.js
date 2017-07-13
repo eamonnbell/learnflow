@@ -13,7 +13,6 @@ const moment = require('moment');
 const Tree = require('../models/Tree');
 const Vote = require('../models/Vote');
 const User = require('../models/User');
-const Credentials = require('../models/Credentials');
 
 const Votes = require('../collections/Votes');
 const Nodes = require('../collections/Nodes');
@@ -119,12 +118,23 @@ var Login = Backbone.View.extend({
 
     var data = Backbone.Syphon.serialize(this);
 
-    var credentials = new Credentials();
-    credentials.set(data);
-    credentials.save();
+    $.ajax({
+      url: '/api/auth/authenticate',
+      type: 'POST',
+      dataType: 'json',
+      data: data,
+      success: function(response){
+        if (response){
+          console.log('setting authToken in sessionStorage...');
+          window.sessionStorage.setItem('authToken', response.id_token);
+          console.log('set authToken in sessionStorage.');
+        } else {
+          console.log('problem: ' + response);
+        }
+      }
+    });
 
     this.$el.find('form').hide();
-    // TODO rewrite as component
     this.$el.find('form').after("Credentials submitted.");
 
   },
