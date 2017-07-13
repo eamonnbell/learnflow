@@ -9,7 +9,7 @@ const utils = require('../utils');
 const createUserSchema = Joi.object({
   username: Joi.string().alphanum().min(2).max(30).required(),
   password: Joi.string().min(8).required(),
-  slogan: Joi.string().max(128)
+  slogan: Joi.string()
 });
 
 const authenticateUserSchema = Joi.object({

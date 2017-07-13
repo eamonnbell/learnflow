@@ -5,7 +5,7 @@ const Mongoose = require('mongoose');
 const UserSchema = new Mongoose.Schema({
   username: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true, index: { unique: true } },
-  slogan: { type: String, required: true },
+  slogan: { type: String },
   admin: { type: Boolean, required: true }
 });
 
