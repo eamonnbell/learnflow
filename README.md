@@ -1,6 +1,10 @@
 # learnflow
 
-SPA in Backbone.js, and API in Hapi to collect and display user wisdom about online educational resources.
+SPA in Backbone.js, and API in Hapi to collect and display user wisdom about online educational resources
+
+## screenshot 
+
+![screenshot](https://raw.githubusercontent.com/eamonnbell/learnflow/master/screenshot.png)
 
 ## structure
 
