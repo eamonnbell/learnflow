@@ -1,5 +1,5 @@
-const $ = require('jquery');
-const Backbone = require('backbone');
+var $ = require('jquery');
+var Backbone = require('backbone');
 Backbone.$ = $;
 
 const _ = require('underscore');
@@ -17,6 +17,29 @@ const User = require('../models/User');
 const Votes = require('../collections/Votes');
 const Nodes = require('../collections/Nodes');
 const Candidates = require('../collections/Candidates');
+
+var NotificationView = Backbone.View.extend({
+  tagName: 'div',
+  className: 'notification',
+  events: {
+    'click': 'closeNotification'
+  },
+  template: _.template($('#notification-template').html()),
+  initialize: function(options) {},
+  render: function(){
+    this.$el.html(this.template(this.attributes));
+    setTimeout(()=>{
+      this.closeNotification();
+    }, 3000);
+    return this;
+  },
+  closeNotification: function(){
+    $(this.el).fadeOut(() => {
+      this.unbind();
+      this.remove();
+    });
+  }
+});
 
 var NodeView = Backbone.View.extend({
   tagName: 'div',
@@ -194,7 +217,12 @@ var TreeView = Backbone.View.extend({
 
   getTree: function(){
     var tree = new Tree();
-    tree.fetch({success: this.renderTree.bind(this)});
+    tree.fetch({
+      success: this.renderTree.bind(this),
+      error: function(model, response){
+        Backbone.Notifications.trigger('flash', response.responseJSON);
+      }      
+    });
   }
 });
 
@@ -224,7 +252,12 @@ var VoteList = Backbone.View.extend({
 
   getVotes: function(){
     var votes = new Votes();
-    votes.fetch({success: this.renderVotes.bind(this)});
+    votes.fetch({
+      success: this.renderVotes.bind(this),
+      error: function(model, response){
+        Backbone.Notifications.trigger('flash', response.responseJSON);
+      }
+    });
   }
 });
 
@@ -254,7 +287,12 @@ var NodeList = Backbone.View.extend({
 
   getNodes: function(){
     var nodes = new Nodes();
-    nodes.fetch({success: this.renderNodes.bind(this)});
+    nodes.fetch({
+      success: this.renderNodes.bind(this),
+      error: function(model, response){
+        Backbone.Notifications.trigger('flash', response.responseJSON);
+      }
+    });
   }            
 });
 
@@ -292,7 +330,6 @@ var Voting = Backbone.View.extend({
     this.$el.find('#form-holder').before(firstview.render().el);
     this.$el.find('#form-holder').after(secondview.render().el);
 
-
     this.$el.find('form > fieldset > input#first').val(ids[0]);
     this.$el.find('form > fieldset > input#second').val(ids[1]);
   },
@@ -300,7 +337,12 @@ var Voting = Backbone.View.extend({
   getCandidates: function(){
     var candidates = new Candidates();
     // TODO understand Fetch API
-    candidates.fetch({success: this.renderCandidates.bind(this)});
+    candidates.fetch({
+      success: this.renderCandidates.bind(this),
+      error: function(model, response){
+        Backbone.Notifications.trigger('flash', response.responseJSON);
+      }      
+    });
   },
 
   formSubmitted: function(event){
@@ -316,13 +358,13 @@ var Voting = Backbone.View.extend({
     this.$el.find('form').hide();
     // TODO rewrite as component
     this.$el.find('form').after("<h3>Submitted!</h3><p><a href='javascript:window.location.reload(true)'>Vote again</a></p>");
-
   },
 });
 
 
 
 module.exports = {
+  NotificationView: NotificationView,
   NodeView: NodeView,
   VoteView: VoteView,
   Home: Home,

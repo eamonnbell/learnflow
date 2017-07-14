@@ -3,14 +3,19 @@
 require("../css/tacit.min.css");
 require("../css/learnflow.css");
 
-const $ = require('jquery');
-const Backbone = require('backbone');
+var $ = require('jquery');
+var Backbone = require('backbone');
+
 Backbone.$ = $;
 
-const _ = require('underscore');
+var _ = require('underscore');
 
 var Router = require('./router');
 var router = new Router();
+
+// attach notification dispatcher to Backbone object
+var notifications = require('./notifications');
+Backbone.Notifications = notifications;
 
 // patch bearer token into Backbone sync
 var _sync = Backbone.sync;

@@ -21,6 +21,9 @@
         </nav>
         </header>
 
+        <div id="notification-area">
+        </div>
+
         <article>
 
         <h1>LearnFlow</h1>
@@ -140,6 +143,10 @@
             <p><strong><%= title %></strong></p>
             <p><img src="img/<%= imgsrc %>"></p>
             <p>by <%= author %><p>
+        </script>
+
+        <script type="text/template" id="notification-template">
+        <strong><%= statusCode %></strong> (<%= error %>) <%= message %>
         </script>
     </body>
     <script type="text/javascript" src="dist/bundle.js"></script>
