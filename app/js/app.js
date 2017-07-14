@@ -1,7 +1,7 @@
 'use strict';
 
-require("../css/tacit.min.css");
-require("../css/learnflow.css");
+require('../css/tacit.min.css');
+require('../css/learnflow.css');
 
 var $ = require('jquery');
 var Backbone = require('backbone');

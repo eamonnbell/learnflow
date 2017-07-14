@@ -28,7 +28,7 @@ var NotificationView = Backbone.View.extend({
   initialize: function(options) {},
   render: function(){
     this.$el.html(this.template(this.attributes));
-    setTimeout(()=>{
+    setTimeout(() => {
       this.closeNotification();
     }, 3000);
     return this;
@@ -105,7 +105,7 @@ var Signup = Backbone.View.extend({
   template: _.template($('#signup-template').html()),
 
   events: {
-    "submit": "formSubmitted",
+    'submit': 'formSubmitted',
   },
   
   render: function() {
@@ -125,7 +125,7 @@ var Signup = Backbone.View.extend({
 
     this.$el.find('form').hide();
     // TODO rewrite as component
-    this.$el.find('form').after("New user submitted.");
+    this.$el.find('form').after('New user submitted.');
 
   },
 });
@@ -136,7 +136,7 @@ var Login = Backbone.View.extend({
   template: _.template($('#login-template').html()),
 
   events: {
-    "submit": "formSubmitted",
+    'submit': 'formSubmitted',
   },
   
   render: function() {
@@ -163,7 +163,7 @@ var Login = Backbone.View.extend({
     });
 
     this.$el.find('form').hide();
-    this.$el.find('form').after("Credentials submitted.");
+    this.$el.find('form').after('Credentials submitted.');
 
   },
 });
@@ -182,11 +182,11 @@ var TreeView = Backbone.View.extend({
 
   renderTree: function(tree){
     var cy = cytoscape({
-      container: this.$el.find('div#cy'), // container to render in
+      container: this.$el.find('div#cy'),
 
       elements: tree.attributes.elements,
 
-      style: [ // the stylesheet for the graph
+      style: [
         {
           selector: 'node',
           style: {
@@ -304,7 +304,7 @@ var Voting = Backbone.View.extend({
   template: _.template($('#voting-template').html()),
 
   events: {
-    "submit": "formSubmitted",
+    'submit': 'formSubmitted',
   },
 
   render: function() {
@@ -336,7 +336,6 @@ var Voting = Backbone.View.extend({
 
   getCandidates: function(){
     var candidates = new Candidates();
-    // TODO understand Fetch API
     candidates.fetch({
       success: this.renderCandidates.bind(this),
       error: function(model, response){
@@ -360,8 +359,6 @@ var Voting = Backbone.View.extend({
     this.$el.find('form').after("<h3>Submitted!</h3><p><a href='javascript:window.location.reload(true)'>Vote again</a></p>");
   },
 });
-
-
 
 module.exports = {
   NotificationView: NotificationView,
