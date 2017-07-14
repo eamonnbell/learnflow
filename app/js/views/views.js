@@ -134,12 +134,8 @@ var Login = Backbone.View.extend({
       data: data,
       success: function(response){
         if (response){
-          console.log('setting authToken in sessionStorage...');
           window.sessionStorage.setItem('authToken', response.id_token);
-          console.log('set authToken in sessionStorage.');
-        } else {
-          console.log('problem: ' + response);
-        }
+        } 
       }
     });
 
@@ -323,6 +319,8 @@ var Voting = Backbone.View.extend({
 
   },
 });
+
+
 
 module.exports = {
   NodeView: NodeView,
