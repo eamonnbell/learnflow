@@ -52,7 +52,7 @@
 
         <script type="text/template" id="signup-template">
         <h2>Signup</h2>
-            <form>
+            <form id="signup-form" data-parsley-validate>
                 <fieldset>
                 <label for="username">New username: </label>
                 <input name="username" id="username" type="text"/>
@@ -71,7 +71,7 @@
 
         <script type="text/template" id="login-template">
         <h2>Login</h2>
-            <form>
+            <form id="login-form" data-parsley-validate>
                 <fieldset>
 
                 <label for="username">Username: </label>
@@ -150,4 +150,5 @@
         </script>
     </body>
     <script type="text/javascript" src="dist/bundle.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.7.2/parsley.js"></script>
 </html>  

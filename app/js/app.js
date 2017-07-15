@@ -2,6 +2,7 @@
 
 require('../css/tacit.min.css');
 require('../css/learnflow.css');
+require('../css/parsely.css');
 
 var $ = require('jquery');
 var Backbone = require('backbone');
