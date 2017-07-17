@@ -52,7 +52,7 @@
 
         <script type="text/template" id="signup-template">
         <h2>Signup</h2>
-            <form id="signup-form" data-parsley-validate>
+            <form id="signup-form">
                 <fieldset>
                 <label for="username">New username: </label>
                 <input name="username" id="username" type="text"/>
@@ -71,14 +71,14 @@
 
         <script type="text/template" id="login-template">
         <h2>Login</h2>
-            <form id="login-form" data-parsley-validate>
+            <form id="login-form" data-parsley-ui-enabled="true">
                 <fieldset>
 
                 <label for="username">Username: </label>
-                <input name="username" id="username" type="text"/>
+                <input name="username" id="username" type="text" data-parsley-required="true"/>
 
                 <label for="password">Password: </label>
-                <input name="password" id="password" type="password"/>
+                <input name="password" id="password" type="password" data-parsley-required="true"/>
             
                 <button type="submit">Login</button>
                 </fieldset>
@@ -150,5 +150,4 @@
         </script>
     </body>
     <script type="text/javascript" src="dist/bundle.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.7.2/parsley.js"></script>
 </html>  

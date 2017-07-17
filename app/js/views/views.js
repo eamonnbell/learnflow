@@ -2,6 +2,8 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
 
+var parsely = require('imports-loader?$=jquery!parsleyjs');
+
 const _ = require('underscore');
 
 const Syphon = require('backbone.syphon');
@@ -144,27 +146,33 @@ var Login = Backbone.View.extend({
     return this;
   },
 
+  attachParsley: function(){
+    this.parsleyinstance = $('#login-form').parsley();
+  },
+
   formSubmitted: function(event){
     // catch submit event and prevent default behavior
     event.preventDefault();
+    if(this.parsleyinstance.isValid()) {
+      var data = Backbone.Syphon.serialize(this);
 
-    var data = Backbone.Syphon.serialize(this);
+      $.ajax({
+        url: '/api/auth/authenticate',
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        success: function(response){
+          if (response){
+            window.sessionStorage.setItem('authToken', response.id_token);
+          } 
+        }
+      });
 
-    $.ajax({
-      url: '/api/auth/authenticate',
-      type: 'POST',
-      dataType: 'json',
-      data: data,
-      success: function(response){
-        if (response){
-          window.sessionStorage.setItem('authToken', response.id_token);
-        } 
-      }
-    });
-
-    this.$el.find('form').hide();
-    this.$el.find('form').after('Credentials submitted.');
-
+      this.$el.find('form').hide();
+      this.$el.find('form').after('Credentials submitted.');    
+    } else {
+      console.log("Did not pass clientside validation.");
+    }
   },
 });
 

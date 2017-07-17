@@ -29,6 +29,7 @@ module.exports = Backbone.Router.extend({
   login: function(){
     var view = new views.Login();
     $('#main').html(view.render().el);
+    view.attachParsley();
   },
 
   nodelist: function(){
