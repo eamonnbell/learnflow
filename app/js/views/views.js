@@ -115,20 +115,28 @@ var Signup = Backbone.View.extend({
     return this;
   },
 
+  attachParsley: function(){
+    this.parsleyinstance = $('#signup-form').parsley();
+    this.parsleyinstance.on('form:error', function(){
+      Backbone.Notifications.trigger('flash', {
+        statusCode: '',
+        error: '',
+        message: 'Form stuff needs fixing.'
+      });
+    });
+  },
+
   formSubmitted: function(event){
     // catch submit event and prevent default behavior
     event.preventDefault();
 
-    var data = Backbone.Syphon.serialize(this);
+    if(this.parsleyinstance.isValid()) {
+      var data = Backbone.Syphon.serialize(this);
 
-    var user = new User();
-    user.set(data);
-    user.save();
-
-    this.$el.find('form').hide();
-    // TODO rewrite as component
-    this.$el.find('form').after('New user submitted.');
-
+      var user = new User();
+      user.set(data);
+      user.save();
+    }
   },
 });
 
@@ -148,6 +156,13 @@ var Login = Backbone.View.extend({
 
   attachParsley: function(){
     this.parsleyinstance = $('#login-form').parsley();
+    this.parsleyinstance.on('form:error', function(){
+      Backbone.Notifications.trigger('flash', {
+        statusCode: '',
+        error: '',
+        message: 'Form stuff needs fixing.'
+      });
+    });
   },
 
   formSubmitted: function(event){
@@ -167,11 +182,6 @@ var Login = Backbone.View.extend({
           } 
         }
       });
-
-      this.$el.find('form').hide();
-      this.$el.find('form').after('Credentials submitted.');    
-    } else {
-      console.log("Did not pass clientside validation.");
     }
   },
 });

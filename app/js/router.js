@@ -22,14 +22,15 @@ module.exports = Backbone.Router.extend({
   },
 
   signup: function(){
-    var view = new views.Signup();
-    $('#main').html(view.render().el);
+    var signupview = new views.Signup();
+    $('#main').html(signupview.render().el);
+    signupview.attachParsley();
   },
 
   login: function(){
-    var view = new views.Login();
-    $('#main').html(view.render().el);
-    view.attachParsley();
+    var loginview = new views.Login();
+    $('#main').html(loginview.render().el);
+    loginview.attachParsley();
   },
 
   nodelist: function(){

@@ -52,13 +52,16 @@
 
         <script type="text/template" id="signup-template">
         <h2>Signup</h2>
-            <form id="signup-form">
+            <form id="signup-form" data-parsley-ui-enabled="true">
                 <fieldset>
                 <label for="username">New username: </label>
-                <input name="username" id="username" type="text"/>
+                <input name="username" id="username" type="text" data-parsley-required="true"/>
 
                 <label for="password">New password: </label>
-                <input name="password" id="password" type="password"/>
+                <input name="password" id="password" type="password" data-parsley-required="true"/>
+
+                <label for="password-confirm">Confirm password: </label>
+                <input name="password-confirm" id="password-confirm" type="password" data-parsley-required="true" data-parsley-equalto="#password"/>
 
                 <label for="slogan">Slogan (optional): </label>
                 <input name="slogan" id="slogan" type="text"/>
