@@ -25,12 +25,13 @@ exports.register = function(server, options, next) {
       auth: 'jwt',
       handler: (req, res) => {
         User.findOne({
+          // should get this from session or token
           username: 'test'
         }, (err, doc) => {
           if (err) {
             return res(Boom.wrap(err, 'Internal MongoDB error'));
           }
-          
+
           if (doc) {
             return res(doc);
           } else {
