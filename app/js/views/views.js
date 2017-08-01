@@ -81,22 +81,49 @@ var VoteView = Backbone.View.extend({
   }
 });
 
+var UserView = Backbone.View.extend({
+  tagName: 'div',
+  className: 'user',
+
+  template: _.template($('#user-template').html()),
+
+  initialize: function(options){
+    if (options.model)
+      this.model = options.model;
+  },
+
+  render: function(){
+    this.$el.html(this.template(this.model.attributes));
+    return this;
+  }
+});
+
 var Home = Backbone.View.extend({
   initialize: function(options) {},
 
   template: _.template($('#home-template').html()),
 
-  getSignedInMessage: function(){
-    var authToken = window.sessionStorage.getItem('authToken');
-    if (authToken) {
-      return authToken + ' is home';
-    } else {
-      return 'no authToken set';
-    }
+  renderMyUser: function(user){
+    var myUserView = new UserView({
+      model: user
+    });
+
+    this.$el.find('#user-container').append(myUserView.render().el);
   },
-  
+ 
   render: function() {
-    this.$el.html(this.template({message: this.getSignedInMessage()}));
+
+    this.$el.html(this.template({}));
+
+    var myUser = new User({id: 'me'});
+    
+    myUser.fetch({
+      success: this.renderMyUser.bind(this),
+      error: function(model, res){
+        Backbone.Notifications.trigger('flash', res.responseJSON);
+      }
+    });
+
     return this;
   }
 });
@@ -387,6 +414,7 @@ module.exports = {
   Login: Login,
   TreeView: TreeView,
   NodeList: NodeList,
+  UserView: UserView,
   VoteList: VoteList,
   Voting: Voting
 };

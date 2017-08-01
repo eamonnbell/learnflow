@@ -45,8 +45,8 @@
         <script type="text/template" id="home-template">
         <h2>Home</h2>
         <p>What is LearnFlow? And why should I care?</p>
-        <h3>Anyone home?</h3>
-        <div><%= message %>
+        <div id="user-container">
+        </div>
         </script>
 
 
@@ -151,6 +151,11 @@
         <script type="text/template" id="notification-template">
         <strong><%= statusCode %></strong> (<%= error %>) <%= message %>
         </script>
+
+        <script type="text/template" id="user-template">
+        Currently signed in as: <strong><%= username %></strong> - (<%= slogan %>)
+        </script>
+
     </body>
     <script type="text/javascript" src="dist/bundle.js"></script>
 </html>  

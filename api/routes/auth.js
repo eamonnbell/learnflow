@@ -20,13 +20,13 @@ const authenticateUserSchema = Joi.object({
 exports.register = function(server, options, next) {
   server.route({
     method: 'GET',
-    path: '/api/auth/me',
+    path: '/api/auth/users/me',
     config: {
       auth: 'jwt',
       handler: (req, res) => {
         User.findOne({
-          // should get this from session or token
-          username: 'test'
+          // get this from validated token
+          username: req.auth.credentials.username
         }, (err, doc) => {
           if (err) {
             return res(Boom.wrap(err, 'Internal MongoDB error'));
@@ -96,7 +96,6 @@ exports.register = function(server, options, next) {
 
   return next();
 };
-
 
 exports.register.attributes = {
   name: 'routes-auth'
