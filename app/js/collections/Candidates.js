@@ -4,7 +4,7 @@ module.exports = Backbone.Collection.extend({
   initialize: function(options) {},
 
   url: function() {
-    return 'http://localhost:3000/api/nodes/randomPair';
+    return '/api/nodes/randomPair';
   },
 
   parse: function(response) {

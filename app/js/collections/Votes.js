@@ -7,5 +7,5 @@ module.exports = Backbone.Collection.extend({
   
   model: Vote,
 
-  url: 'http://localhost:3000/api/votes',
+  url: '/api/votes',
 });
